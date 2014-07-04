@@ -7,7 +7,7 @@ Installation
 =========================
 As simple as that : 
 
-    npm install node-plugin-topic-color
+    npm install nodebb-plugin-topic-color
 
 Usage
 =========================
