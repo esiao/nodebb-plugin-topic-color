@@ -4,14 +4,7 @@
 	"description": "Allow users to add colors to their topics",
 	"url": "to define",
 	"library": "./library.js",
-	"hooks": [
-		{
-			"hook": "filter:scripts.get", "method": "addScripts"
-		},
-		{
-			"hook": "action:app.load", "method": "init"
-		}
-	],
+	"hooks": [],
 	"staticDirs": {
 		"public": "./public"
 	},
