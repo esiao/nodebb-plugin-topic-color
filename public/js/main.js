@@ -14,7 +14,7 @@
 		$(window).on('action:topic.loaded', colorifyTopics);
 
 		socket.on('event:post_edited', function() {
-		    setTimeout(colorifyTopics,260);
+		    setTimeout(colorifyTopics,270);
 		});
 
 	});
@@ -25,7 +25,7 @@
 			var title = $(this);
 			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if (title.html().match(reg)) {
-				var url = title.html().replace(reg,'$9')
+				var url = title.html().replace(reg,'$9').toLowerCase();
 				title.html( title.html().replace(reg,'<font style="color:$1">$9</font>') );
 				reg = /(\/topic\/\d*\/)(.*)/;
 				title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
