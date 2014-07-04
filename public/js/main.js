@@ -13,36 +13,41 @@
 		$(window).on('action:categories.new_topic.loaded', colorifyTopics);
 		$(window).on('action:topic.loaded', colorifyTopics);
 
+		socket.on('event:post_edited', function() {
+		    setTimeout(colorifyTopics,270);
+		});
+
 	});
 
 	function colorifyTopics() {
 		//Change topic title on topic list
 		$('.category-item .topic-title').each(function() {
 			var title = $(this);
-			var reg = /#([0-9A-Fa-f]{6})([^#]*)/g;
+			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if (title.html().match(reg)) {
-				title.html( title.html().replace(reg,'<font color="#$1">$2</font>') );
-				reg = /([0-9A-Fa-f]{6})/g;
-				title.attr('href', title.attr('href').replace(reg,'') );
+				var url = title.html().replace(reg,'$9').toLowerCase();
+				title.html( title.html().replace(reg,'<font style="color:$1">$9</font>') );
+				reg = /(\/topic\/\d*\/)(.*)/;
+				title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
 			}
 		});
 		//Change topic title on topic
 		$('h3.topic-title p.topic-title').each(function() {
 			var title = $(this);
-			var reg = /#([0-9A-Fa-f]{6})([^#]*)/g;
+			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if (title.html().match(reg)) {
-				title.html( title.html().replace(reg,'<font color="#$1">$2</font>') );
+				title.html( title.html().replace(reg,'<font style="color:$1">$9</font>') );
 			}
 		});
 		//Change Breadcrump
 		$('ol.breadcrumb li.active span').each(function() {
 			var title = $(this);
-			var reg = /#([0-9A-Fa-f]{6})/g;
+			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if (title.html().match(reg)) {
-				title.html( title.html().replace(reg,'') );
+				title.html( title.html().replace(reg,'$9') );
 			}
 		});
-		var reg = /#([0-9A-Fa-f]{6})/g;
-		document.title = document.title.replace(reg, '');
+		var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
+		document.title = document.title.replace(reg, '$9');
 	}
 }());

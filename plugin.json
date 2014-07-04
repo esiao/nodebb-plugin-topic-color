@@ -4,11 +4,7 @@
 	"description": "Allow users to add colors to their topics",
 	"url": "to define",
 	"library": "./library.js",
-	"hooks": [
-		{
-			"hook": "action:topic.edit", "method": "ColorTitle"
-		}
-	],
+	"hooks": [],
 	"staticDirs": {
 		"public": "./public"
 	},
