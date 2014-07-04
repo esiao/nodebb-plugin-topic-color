@@ -1,0 +1,25 @@
+{
+  "name": "nodebb-plugin-topic-color",
+  "version": "0.0.1",
+  "description": "A NodeBB Plugin to add some colors to the topics titles.",
+  "main": "library.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esiao/nodebb-plugin-topic-color.git"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "colors",
+    "topics"
+  ],
+  "author": "esiao",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/esiao/nodebb-plugin-topic-color/issues"
+  },
+  "homepage": "https://github.com/esiao/nodebb-plugin-topic-color"
+}
