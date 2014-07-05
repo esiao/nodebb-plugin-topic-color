@@ -13,7 +13,15 @@
 				var username = TopicData.user.username;
 
 				User.getUidByUsername(username, function(err, uid){
-					console.log(uid);
+
+					/*Working but not as permissive as wanted.
+					Groups.isMember(uid, 'administrators', function(err, allowed){
+						console.log(allowed);
+					});*/
+					Groups.isMemberOfGroups(uid, ['administrators','Moderator'], function(err, allowed){
+						console.log(allowed);
+					});
+
 				});
 
 			});
