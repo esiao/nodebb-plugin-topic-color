@@ -9,8 +9,6 @@
 			}
 		});
 
-		$(window).on('action:categories.loaded', colorifyTopics);
-		$(window).on('action:categories.new_topic.loaded', colorifyTopics);
 		$(window).on('action:topic.loaded', colorifyTopics);
 
 		socket.on('event:post_edited', function() {
