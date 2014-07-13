@@ -1,33 +1,37 @@
 (function(module) {
 	"use strict";
 
+	//Requirements
 	var 	Topics = module.parent.require('./topics.js'),
 		User = module.parent.require('./user.js'),
-		Groups = module.parent.require('./groups.js');
+		Groups = module.parent.require('./groups.js'),
+		async = require('async');
 
-	var plugin = {
+	//Global variables
+	var colorify = false;
+
+	var ColorifyTopics = {
 		TestGroup : function (tid) {
-				//console.log(tid);
+			//console.log(tid);
 			Topics.getTopicDataWithUser(tid, function(err, TopicData) {
 
 				var username = TopicData.user.username;
 
 				User.getUidByUsername(username, function(err, uid){
 
-					/*Working but not as permissive as wanted.
-					Groups.isMember(uid, 'administrators', function(err, allowed){
-						console.log(allowed);
-					});*/
-					Groups.isMemberOfGroups(uid, ['administrators','Moderator'], function(err, allowed){
-						console.log(allowed);
+					var allowedGroups = [ 'administrators', 'Moderator', 'Test' ];
+					async.some(allowedGroups, function(group){
+						Groups.isMember(uid, group, function(err, allowed){
+							if (allowed) colorify = true;
+							exports.colorify = colorify;
+						});	
 					});
 
 				});
-
 			});
 		}
 	};
 
-	module.exports = plugin;
+	module.exports = ColorifyTopics;
 
 }(module));
