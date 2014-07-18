@@ -10,7 +10,7 @@
 		async = require('async');
 
 	//Global variables
-	var ColorifyTopics = {colorify : false};
+	var ColorifyTopics = {};
 
 	//Init plugin
 	ColorifyTopics.init = function(app, middleware, controllers) {
@@ -34,8 +34,7 @@
 				var allowedGroups = [ 'administrators', 'Moderator', 'Test' ];
 				async.some(allowedGroups, function(group){
 					Groups.isMember(uid, group, function(err, allowed){
-						if (allowed) colorify = true;
-						exports.colorify = colorify;
+						if (allowed) console.log('true');
 					});	
 				});
 

@@ -1,9 +1,6 @@
 (function() {
 	"use strict";
 
-	var allowed = require(['../.././library.js']);
-	console.log(allowed.colorify);
-
 	jQuery('document').ready(function() {
 
 		$(window).on('action:ajaxify.end', function(ev, data) {
@@ -13,6 +10,10 @@
 		});
 
 		$(window).on('action:topic.loaded', colorifyTopics);
+
+		$(window).on('action:page.load', function(ev, data){
+			console.log(data)
+		});
 
 		socket.on('event:post_edited', function() {
 		    setTimeout(colorifyTopics,270);
