@@ -157,6 +157,14 @@
 				title.html( title.html().replace(reg,'$9') );
 			}
 		});
+		//Change header information
+		$('.header-topic-title span').each(function() {
+			var title = $(this);
+			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
+			if (title.html().match(reg)) {
+				title.html( title.html().replace(reg,'$9') );
+			}
+		});
 		//Change document title
 		var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 		document.title = document.title.replace(reg, '$9');
