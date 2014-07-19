@@ -3,7 +3,12 @@
 
 	$('document').ready(function() {
 
-		var allowedGroups = ['Bucket','Moderator'];
+		var allowedGroups = ['Bucket'];
+
+		var request = window.location.origin+'/api/admin/plugins/topic-color';
+		$.getJSON(request, function (data) {
+                        allowedGroups = JSON.parse(data.allowedGroups);
+                    });
 
 		$(window).on('action:ajaxify.end', function(ev, data) {
 
