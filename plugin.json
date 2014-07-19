@@ -2,13 +2,20 @@
 	"id": "nodebb-plugin-topic-color",
 	"name": "NodeBB Topic Color",
 	"description": "Allow users to add colors to their topics",
-	"url": "to define",
+	"url": "https://github.com/esiao/nodebb-plugin-topic-color",
 	"library": "./library.js",
-	"hooks": [],
+    	"templates": "./public/templates",
+	"hooks": [
+        		{ "hook": "action:app.load", "method": "init" },
+		{ "hook": "filter:admin.header.build", "method": "admin.menu" }
+	],
 	"staticDirs": {
 		"public": "./public"
 	},
 	"scripts": [
 		"public/js/main.js"
+	],
+	"less": [
+		"public/less/style.less"
 	]
 }
