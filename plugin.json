@@ -14,5 +14,8 @@
 	},
 	"scripts": [
 		"public/js/main.js"
+	],
+	"less": [
+		"public/less/style.less"
 	]
 }
