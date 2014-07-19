@@ -120,8 +120,10 @@
 			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if ($.inArray(index, allowed) !== -1) {
 				if (title.html().match(reg)) {
-					var url = title.html().replace(reg,'$9').toLowerCase();
+					var url = title.html().toLowerCase().replace(reg,'$9');
 					title.html( title.html().replace(reg,'<font style="color:$1">$9</font>') );
+					reg = /[^a-z0-9]+/g;
+					url = url.trim().replace(reg,'-');
 					reg = /(\/topic\/\d*\/)(.*)/;
 					title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
 				} 		
@@ -129,6 +131,8 @@
 				if (title.html().match(reg)) {
 					var url = title.html().replace(reg,'$9').toLowerCase();
 					title.html( title.html().replace(reg,'$9') );
+					reg = /[^a-z0-9]+/g;
+					url = url.trim().replace(reg,'-');
 					reg = /(\/topic\/\d*\/)(.*)/;
 					title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
 				}

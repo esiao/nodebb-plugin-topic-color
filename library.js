@@ -1,14 +1,7 @@
 (function(module) {
 	"use strict";
 
-	//Requirements
-	var 	Topics = module.parent.require('./topics.js'),
-		User = module.parent.require('./user.js'),
-		Groups = module.parent.require('./groups.js'),
-		fs = require('fs'),
-		path = require('path');
-
-	//Global variables
+	//Gonstruct object
 	var ColorifyTopics = {};
 
 	//Init plugin

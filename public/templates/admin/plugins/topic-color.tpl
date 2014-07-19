@@ -25,5 +25,6 @@
 			var value = $(this).attr('value');
 			if ($(this).is(':checked')) data.push(value);
 		});
+          console.log(data);
 	});
 </script>
