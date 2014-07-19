@@ -7,9 +7,7 @@
     	"templates": "./public/templates",
 	"hooks": [
         		{ "hook": "action:app.load", "method": "init" },
-		{ "hook": "filter:admin.header.build", "method": "admin.menu" },
-
-		{ "hook": "action:topic.edit", "method": "testGroup" }
+		{ "hook": "filter:admin.header.build", "method": "admin.menu" }
 	],
 	"staticDirs": {
 		"public": "./public"

@@ -6,8 +6,7 @@
 		User = module.parent.require('./user.js'),
 		Groups = module.parent.require('./groups.js'),
 		fs = require('fs'),
-		path = require('path'),
-		async = require('async');
+		path = require('path');
 
 	//Global variables
 	var ColorifyTopics = {};
@@ -22,25 +21,6 @@
 		app.get('/api/admin/plugins/topic-color', render);
 	}
 
-	//Test if user is in allowedGroups for topic.
-	ColorifyTopics.testGroup = function (tid) {
-		//console.log(tid);
-		Topics.getTopicDataWithUser(tid, function(err, TopicData) {
-
-			var username = TopicData.user.username;
-
-			User.getUidByUsername(username, function(err, uid){
-
-				var allowedGroups = [ 'administrators', 'Moderator', 'Test' ];
-				async.some(allowedGroups, function(group){
-					Groups.isMember(uid, group, function(err, allowed){
-						if (allowed) console.log('true');
-					});	
-				});
-
-			});
-		});
-	};
 	//Build admin menu item.
 	ColorifyTopics.admin = {
 		menu: function (custom_header, callback) {
