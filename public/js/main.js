@@ -73,8 +73,9 @@
 					});
 					if (match.length > 0) {
 						colorifyTopics('allow');
+						$(window).on('scroll',function(){colorifyTopics('allow')});
 					} else {
-						colorifyTopics('deny');
+						$(window).on('scroll',function(){colorifyTopics('deny')});
 					}
 				});
 			});
