@@ -133,7 +133,11 @@
 					reg = /[^a-z0-9]+/g;
 					url = url.trim().replace(reg,'-');
 					reg = /(\/topic\/\d*\/)(.*)/;
-					title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
+					if (title.attr('href') != undefined) {
+						title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
+					} else {
+						title.parent('a').attr( 'href', title.parent('a').attr('href').replace(reg,'$1'+url) );
+					}
 				} 		
 			} else {
 				if (title.html().match(reg)) {
@@ -142,12 +146,16 @@
 					reg = /[^a-z0-9]+/g;
 					url = url.trim().replace(reg,'-');
 					reg = /(\/topic\/\d*\/)(.*)/;
-					title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
+					if (title.attr('href') != undefined) {
+						title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
+					} else {
+						title.parent('a').attr( 'href', title.parent('a').attr('href').replace(reg,'$1'+url) );
+					}
 				}
 			}
 		});
 		//Change topic title on topic
-		$('h3.topic-title p.topic-title').each(function() {
+		$('h3 p.topic-title').each(function() {
 			var title = $(this);
 			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if (allowed == 'allow') {
