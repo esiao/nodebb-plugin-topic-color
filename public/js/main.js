@@ -5,7 +5,7 @@
 
 		var allowedGroups = ['Bucket'];
 
-		var request = window.location.origin+'/api/admin/plugins/topic-color';
+		var request = window.location.origin+'/api/plugins/topic-color';
 		$.getJSON(request, function (data) {
                         allowedGroups = JSON.parse(data.allowedGroups);
                     });
@@ -119,6 +119,18 @@
 			});
 		});
 
+		//Notifications dropdown menu
+		$('.notifications').on('click',function () {
+			setTimeout(function () {
+				$('#notif-list .text').each(function(){
+					var title = $(this);
+					var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
+					if (title.html().match(reg)) {
+						title.html( title.html().replace(reg,'$9') );
+					}
+				});
+			},20)
+		});
 	});
 
 	function colorifyTopics(allowed) {

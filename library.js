@@ -23,6 +23,16 @@ var db = module.parent.require('./database');
 		});
 	};
 
+	function renderFront (req, res, next) {
+		db.getObject('plugins:topic-color', function(err, data) {
+			if (err) return next(err);
+			if (!data) {
+				data = { allowedGroups : defaultGroup };
+			}
+			res.render('/plugins/topic-color', data);
+		});
+	};
+
 	//Create the save function
 	function save (req, res, next) {
 
@@ -43,6 +53,7 @@ var db = module.parent.require('./database');
 	ColorifyTopics.init = function (app, middleware, controllers) {
 		app.get('/admin/plugins/topic-color', middleware.admin.buildHeader, renderAdmin);
 		app.get('/api/admin/plugins/topic-color', renderAdmin);
+		app.get('/api/plugins/topic-color', renderFront);
 
 		app.post('/api/admin/plugins/topic-color/save', save);
 	};
