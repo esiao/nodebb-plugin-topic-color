@@ -131,6 +131,27 @@
 				});
 			},20)
 		});
+
+		$(window).on('action:widgets.loaded', function () {
+			setTimeout(function () {
+				$('#recent_topics li a').each(function(){
+					var title = $(this);
+					var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
+					if (title.html().match(reg)) {
+						var url = title.html().replace(reg,'$9').toLowerCase();
+						title.html( title.html().replace(reg,'$9') );
+						reg = /[^a-z0-9]+/g;
+						url = url.trim().replace(reg,'-');
+						reg = /(\/topic\/\d*\/)(.*)/;
+						if (title.attr('href') != undefined) {
+							title.attr( 'href', title.attr('href').replace(reg,'$1'+url) );
+						} else {
+							title.parent('a').attr( 'href', title.parent('a').attr('href').replace(reg,'$1'+url) );
+						}
+					}
+				});
+			},200);
+		});
 	});
 
 	function colorifyTopics(allowed) {
