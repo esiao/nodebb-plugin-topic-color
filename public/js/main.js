@@ -12,7 +12,7 @@
 
 		$(window).on('action:ajaxify.end', function(ev, data) {
 
-			if (data.url.match(/^category/) || data.url.match(/^unread/) || data.url.match(/^recent/) || data.url.match(/^popular/)) {
+			if (data.url.match(/^category/) || data.url.match(/^unread/) || data.url.match(/^recent/) || data.url.match(/^popular/) || data.url.match(/^user\/([a-z0-9])+\/topics/)) {
 
 				var index = [];
 				var count = 0;
