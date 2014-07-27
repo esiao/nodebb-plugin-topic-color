@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-topic-color",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A NodeBB Plugin to add some colors to the topics titles.",
   "main": "library.js",
   "scripts": {
