@@ -57,7 +57,7 @@
 				var count = 0;
 
 				/* Who posted the topic */
-				var request = window.location.origin+'/api/home';
+				var request = window.location.origin+'/api/';
 				$.getJSON(request, function (data) {
 					
 					$.each(data.categories, function (i, category){
