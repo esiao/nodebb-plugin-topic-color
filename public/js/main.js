@@ -51,6 +51,49 @@
 						});
 					});						
 				});
+			} else if (data.url.match('')) {
+
+				var index = [];
+				var count = 0;
+
+				/* Who posted the topic */
+				var request = window.location.origin+'/api/home';
+				$.getJSON(request, function (data) {
+					
+					$.each(data.categories, function (i, category){
+						var posts = category.posts;
+						$.each(category.posts, function (el, post) {
+
+							var uid = post.uid,
+							inGroups = [];
+
+							/* In which groups is the user */
+							var request = window.location.origin+'/api/groups';
+							$.getJSON(request, function (data) {
+
+								$.each(data.groups, function (i, group){
+									$.each(group.members, function (i, member) {
+										if (member.uid == uid) {
+											inGroups.push(group.name);
+										}
+									});
+								});
+
+								count++;
+								var match = $.grep(inGroups, function(element) {
+								    	return $.inArray(element, allowedGroups) !== -1;
+								});
+								if (match.length > 0) {
+									index.push(el);
+								}
+								if (count == posts.length) {
+									colorifyTopics(index);
+								}
+							});
+						});
+					});
+					
+				});
 			}
 		});
 
@@ -152,9 +195,8 @@
 				});
 			},200);
 		});
-		//Home
 		//Notifications
-		$('.post-preview a[href*="/topic/"], .notifications-list a[href*="/topic/"]').each(function () {
+		$('.notifications-list a[href*="/topic/"]').each(function () {
 			var title = $(this);
 			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if (title.html().match(reg)) {
@@ -173,8 +215,8 @@
 	});
 
 	function colorifyTopics(allowed) {
-		//Change topic title on topic list
-		$('.category-item .topic-title').each(function (index) {
+		//Change topic title on home & topic list
+		$('.post-preview a[href*="/topic/"], .category-item .topic-title').each(function (index) {
 			var title = $(this);
 			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if ($.inArray(index, allowed) !== -1) {
@@ -218,18 +260,9 @@
 					title.html( title.html().replace(reg,'$9') );
 				}
 			}
-
 		});
-		//Change Breadcrump
-		$('ol.breadcrumb li.active span').each(function() {
-			var title = $(this);
-			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
-			if (title.html().match(reg)) {
-				title.html( title.html().replace(reg,'$9') );
-			}
-		});
-		//Change header information
-		$('.header-topic-title span').each(function() {
+		//Change Breadcrump & header information
+		$('ol.breadcrumb li.active span, .header-topic-title span').each(function() {
 			var title = $(this);
 			var reg = /%\((#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})|(rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\))|([a-z]){3,})\)(\[([^%\(]*)\])/g;
 			if (title.html().match(reg)) {
