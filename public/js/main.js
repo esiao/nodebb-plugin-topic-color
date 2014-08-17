@@ -64,31 +64,38 @@
 						var posts = category.posts;
 						$.each(category.posts, function (el, post) {
 
-							var uid = post.uid,
-							inGroups = [];
+							var slug = post.topic.slug;
+							request = window.location.origin+'/api/topic/'+slug;
 
-							/* In which groups is the user */
-							var request = window.location.origin+'/api/groups';
-							$.getJSON(request, function (data) {
+							$.getJSON(request, function (topic) {
 
-								$.each(data.groups, function (i, group){
-									$.each(group.members, function (i, member) {
-										if (member.uid == uid) {
-											inGroups.push(group.name);
-										}
+								var uid = topic.uid,
+								inGroups = [];
+
+								/* In which groups is the user */
+								var request = window.location.origin+'/api/groups';
+								$.getJSON(request, function (data) {
+
+									$.each(data.groups, function (i, group){
+										$.each(group.members, function (i, member) {
+											if (member.uid == uid) {
+												inGroups.push(group.name);
+											}
+										});
 									});
-								});
 
-								count++;
-								var match = $.grep(inGroups, function(element) {
-								    	return $.inArray(element, allowedGroups) !== -1;
+									var match = $.grep(inGroups, function(element) {
+									    	return $.inArray(element, allowedGroups) !== -1;
+									});
+
+									if (match.length > 0) {
+										colorifyTopics('allow');
+										$(window).on('scroll',function(){colorifyTopics('allow')});
+									} else {
+										colorifyTopics('deny');
+										$(window).on('scroll',function(){colorifyTopics('deny')});
+									}
 								});
-								if (match.length > 0) {
-									index.push(el);
-								}
-								if (count == posts.length) {
-									colorifyTopics(index);
-								}
 							});
 						});
 					});
