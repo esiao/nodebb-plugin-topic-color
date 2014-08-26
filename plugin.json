@@ -6,8 +6,8 @@
 	"library": "./library.js",
     	"templates": "./public/templates",
 	"hooks": [
-        		{ "hook": "action:app.load", "method": "init" },
-		{ "hook": "filter:admin.header.build", "method": "admin.menu" }
+    		{ "hook": "static:app.load", "method": "init" },
+		{ "hook": "filter:admin.header.build", "method": "addAdminNavigation" }
 	],
 	"staticDirs": {
 		"public": "./public"

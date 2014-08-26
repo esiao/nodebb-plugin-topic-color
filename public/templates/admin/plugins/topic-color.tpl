@@ -1,7 +1,7 @@
 <h1><i class="fa fa-tint"></i> Colorify Topics</h1>
 <hr />
 
-<div class="alert alert-info">
+<div class="bg-primary alert">
     <p>This plugin allow some groups of users to colorify their topic titles.</p>
 </div>
 
@@ -18,8 +18,7 @@
 
 <script type='text/javascript'>
 
-    var request = window.location.origin+'/api/groups';
-    $.getJSON(request, function (data) {
+    $.getJSON('/api/groups', function (data) {
             if (data.groups.length == 0){
                 $('#groups').append('<p class="alert alert-warning">You don\'t have any groups set</p>');
             } else if (data.groups.length == 1) {
@@ -35,15 +34,14 @@
                     if (group.name != 'Bucket') {
                         $('#groups').append('<input type="checkbox" title="'+group.name+'" id="'+group.name+'" name="allowed" value="'+group.name+'"> <label for="'+group.name+'">'+group.name+'</label>');
                     }
-                    var request = window.location.origin+'/api/admin/plugins/topic-color';
-                    $.getJSON(request, function (data) {
-                        groups = JSON.parse(data.allowedGroups);
-                        $.each(groups, function(i, group){
-                            $('#'+group).attr('checked','checked');
-                        });
-                    });
                 });                
             };
+            $.getJSON('/api/admin/plugins/topic-color', function (data) {
+                groups = JSON.parse(data.allowedGroups);
+                $.each(groups, function(i, group){
+                    $('#'+group).attr('checked','checked');
+                });
+            });
     });
 
     $('#save').click( function (event) {

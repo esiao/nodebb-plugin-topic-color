@@ -1,73 +1,53 @@
 "use strict";
-var db = module.parent.require('./database');
 
-(function(ColorifyTopics) {
-	var defaultGroup = ['Bucket'],
-	allowedGroups = defaultGroup;
+var 	db = module.parent.require('./database'),
+	colorifyTopics = {},
+	defaultGroup = ['Bucket'];
 
-	//Retieve database and get information or create
-	db.getObject('plugins:topic-color', function(err, data) {
-		if (data) {
-			allowedGroups = data.allowedGroups ? data.allowedGroups : data.defaultGroup;
-		}
+colorifyTopics.init = function (app, middleware, controllers, callback) {
+
+	app.get('/admin/plugins/topic-color', middleware.admin.buildHeader, renderAdmin);
+	app.get('/api/admin/plugins/topic-color', renderAdmin);
+	app.get('/api/plugins/topic-color', renderFront);
+
+	app.post('/api/admin/plugins/topic-color/save', save);
+
+	callback();
+};
+
+colorifyTopics.addAdminNavigation = function(header, callback) {
+	
+	header.plugins.push({
+		route: '/plugins/topic-color',
+		icon: 'fa-tint',
+		name: 'Topic Color'
 	});
 
-	//Build admin render
-	function renderAdmin (req, res, next) {
-		db.getObject('plugins:topic-color', function(err, data) {
-			if (err) return next(err);
-			if (!data) {
-				data = { allowedGroups : defaultGroup };
-			}
-			res.render('admin/plugins/topic-color', data);
-		});
-	};
+	callback(null, header);
+};
 
-	function renderFront (req, res, next) {
-		db.getObject('plugins:topic-color', function(err, data) {
-			if (err) return next(err);
-			if (!data) {
-				data = { allowedGroups : defaultGroup };
-			}
-			res.render('/plugins/topic-color', data);
-		});
-	};
+function render (res, next, path) {
 
-	//Create the save function
-	function save (req, res, next) {
-
-		var data = { allowedGroups : req.body.allowedGroups };
-
-		db.setObject('plugins:topic-color', data, function(err) {
-
-			if (err) {
-				return res.json(500, 'Error while saving settings');
-			}
-
-			res.json('Settings successfully saved');
-		});
-
-	}
-
-	//Init plugin
-	ColorifyTopics.init = function (app, middleware, controllers) {
-		app.get('/admin/plugins/topic-color', middleware.admin.buildHeader, renderAdmin);
-		app.get('/api/admin/plugins/topic-color', renderAdmin);
-		app.get('/api/plugins/topic-color', renderFront);
-
-		app.post('/api/admin/plugins/topic-color/save', save);
-	};
-
-	//Build admin menu item.
-	ColorifyTopics.admin = {
-		menu: function (custom_header, callback) {
-			custom_header.plugins.push({
-				'route': '/plugins/topic-color',
-				'icon': 'fa-tint',
-				'name': 'Colorify Topics'
-			});
-			callback(null, custom_header);
+	db.getObject('plugins:topic-color', function(err, data) {
+		if (err) {
+			return next(err);
 		}
-	};
+		if (!data) {
+			data = { allowedGroups : defaultGroup };
+		}
+		res.render(path, data);
+	});
+}
 
-}(module.exports));
+function renderAdmin (req, res, next) { render( res, next, '/admin/plugins/topic-color' ) }
+function renderFront (req, res, next) { render( res, next, '/plugins/topic-color' ) }
+
+function save (req, res, next) {
+
+	var data = { allowedGroups : req.body.allowedGroups };
+	db.setObject('plugins:topic-color', data, function(err) {
+		err ? res.json(500, 'Error while saving settings') : res.json('Settings successfully saved');
+	});
+}
+
+module.exports = colorifyTopics;
