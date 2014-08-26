@@ -39,8 +39,8 @@ function render (res, next, path) {
 	});
 }
 
-function renderAdmin (req, res, next) { render( res, next, '/admin/plugins/topic-color' ) }
-function renderFront (req, res, next) { render( res, next, '/plugins/topic-color' ) }
+function renderAdmin (req, res, next) { render( res, next, 'admin/plugins/topic-color' ) }
+function renderFront (req, res, next) { render( res, next, 'plugins/topic-color' ) }
 
 function save (req, res, next) {
 
