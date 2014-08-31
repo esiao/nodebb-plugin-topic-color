@@ -32,7 +32,9 @@ function render (res, next, path) {
 		if (err) {
 			return next(err);
 		}
-		if (!data) {
+		if (data) {
+			data = { allowedGroups : JSON.parse(data.allowedGroups) };
+		} else {
 			data = { allowedGroups : defaultGroup };
 		}
 		res.render(path, data);

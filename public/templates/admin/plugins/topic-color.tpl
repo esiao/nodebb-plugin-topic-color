@@ -37,7 +37,7 @@
                 });                
             };
             $.getJSON('/api/admin/plugins/topic-color', function (data) {
-                groups = JSON.parse(data.allowedGroups);
+                groups = data.allowedGroups;
                 $.each(groups, function(i, group){
                     $('#'+group).attr('checked','checked');
                 });
