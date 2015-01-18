@@ -3,6 +3,9 @@
 	"name": "NodeBB Topic Color",
 	"description": "Allow users to add colors to their topics",
 	"url": "https://github.com/esiao/nodebb-plugin-topic-color",
+	"nbbpm": {
+		"compatibility": "^0.5.0"
+	},
 	"library": "./library.js",
     	"templates": "./public/templates",
 	"hooks": [

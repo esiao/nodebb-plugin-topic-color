@@ -4,13 +4,13 @@ var 	db = module.parent.require('./database'),
 	colorifyTopics = {},
 	defaultGroup = ['Bucket'];
 
-colorifyTopics.init = function (app, middleware, controllers, callback) {
+colorifyTopics.init = function (params, callback) {
 
-	app.get('/admin/plugins/topic-color', middleware.admin.buildHeader, renderAdmin);
-	app.get('/api/admin/plugins/topic-color', renderAdmin);
-	app.get('/api/plugins/topic-color', renderFront);
+	params.router.get('/admin/plugins/topic-color', params.middleware.admin.buildHeader, renderAdmin);
+	params.router.get('/api/admin/plugins/topic-color', renderAdmin);
+	params.router.get('/api/plugins/topic-color', renderFront);
 
-	app.post('/api/admin/plugins/topic-color/save', save);
+	params.router.post('/api/admin/plugins/topic-color/save', save);
 
 	callback();
 };
